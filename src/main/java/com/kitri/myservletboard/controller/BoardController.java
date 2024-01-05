@@ -1,5 +1,8 @@
 package com.kitri.myservletboard.controller;
 
+import com.kitri.myservletboard.data.Board;
+import com.kitri.myservletboard.service.BoardService;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,9 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 @WebServlet("/board/*")
 public class BoardController extends HttpServlet {
+    BoardService boardService = BoardService.getInstance();
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -28,6 +33,8 @@ public class BoardController extends HttpServlet {
         String view = "/view/board/";
 
         if (command.equals("/board/list")) {
+            ArrayList<Board> boards = boardService.getBoards(); // 게시판 리스트
+            request.setAttribute("boards", boards);
             view += "list.jsp";
         } else if (command.equals("/board/createForm")) {
             view += "createForm.jsp";
