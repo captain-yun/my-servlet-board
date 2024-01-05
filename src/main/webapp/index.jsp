@@ -9,5 +9,8 @@
 </h1>
 <br/>
 <a href="hello-servlet">Hello Servlet</a>
+<%
+    response.sendRedirect("/board/list");
+%>
 </body>
 </html>
