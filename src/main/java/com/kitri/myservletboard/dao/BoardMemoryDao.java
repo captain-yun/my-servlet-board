@@ -5,6 +5,7 @@ import com.kitri.myservletboard.service.BoardService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class BoardMemoryDao implements BoardDao {
     private static final BoardMemoryDao instance = new BoardMemoryDao();
@@ -41,14 +42,19 @@ public class BoardMemoryDao implements BoardDao {
 
     @Override
     public void save(Board board) {
+        Long id = memoryBoardDB.stream().map(Board::getId).max(Comparator.comparing(x -> x)).get();
+        board.setId(++id);
+
         memoryBoardDB.add(board);
     }
 
     @Override
     public void update(Board board) {
         Board board_ = getById(board.getId());
-        memoryBoardDB.remove(board_);
-        memoryBoardDB.add(board);
+        board_.setTitle(board.getTitle());
+        board_.setContent(board.getContent());
+//        memoryBoardDB.remove(board_);
+//        memoryBoardDB.add(board);
     }
 
     @Override
