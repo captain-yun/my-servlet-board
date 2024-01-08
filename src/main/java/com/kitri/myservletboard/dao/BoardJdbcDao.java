@@ -133,16 +133,81 @@ public class BoardJdbcDao implements BoardDao {
 
     @Override
     public void save(Board board) {
-        
+        Connection conn = null;
+        PreparedStatement ps = null;
+        int insertCount = 0;
+
+        try {
+            conn = connDB();
+
+            String query = "INSERT INTO board (title, content, writer) VALUES (?, ?, ?)";
+            ps = conn.prepareStatement(query);
+            ps.setString(1, board.getTitle());
+            ps.setString(2, board.getContent());
+            ps.setString(3, board.getWriter());
+            insertCount = ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                ps.close();
+                conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
     public void update(Board board) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        int insertCount = 0;
 
+        try {
+            conn = connDB();
+            String query = "UPDATE board set title = ?, content = ? WHERE id = ?";
+            ps = conn.prepareStatement(query);
+            ps.setString(1, board.getTitle());
+            ps.setString(2, board.getContent());
+            ps.setLong(3, board.getId());
+            insertCount = ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                ps.close();
+                conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
     public void delete(Board board) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        int deleteCount = 0;
 
+        try {
+            conn = connDB();
+            String query = "DELETE FROM board WHERE id = ?";
+            ps = conn.prepareStatement(query);
+            ps.setLong(1, board.getId());
+            deleteCount = ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                ps.close();
+                conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
