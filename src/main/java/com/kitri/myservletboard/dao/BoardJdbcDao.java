@@ -40,26 +40,26 @@ public class BoardJdbcDao implements BoardDao {
     @Override
     public ArrayList<Board> getAll() {
         Connection conn = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
         ArrayList<Board> boards = new ArrayList<Board>();
 
         try {
             conn = connDB();
             String query = "select * from Board";
-            preparedStatement = conn.prepareStatement(query);
-            resultSet = preparedStatement.executeQuery(query);
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery(query);
 
-            while(resultSet.next()) { // 결과 세트에서 한 행씩 처리
+            while(rs.next()) { // 결과 세트에서 한 행씩 처리
                 // 한 행(회원 1명당) 처리
-                Long id = resultSet.getLong("id");
-                String title = resultSet.getString("title");
-                String content = resultSet.getString("content");
-                String writer = resultSet.getString("writer");
-                LocalDateTime createdAt = resultSet.getTimestamp("created_at").toLocalDateTime();
-                int viewCount = resultSet.getInt("view_count");
-                int commentCount = resultSet.getInt("comment_count");
+                Long id = rs.getLong("id");
+                String title = rs.getString("title");
+                String content = rs.getString("content");
+                String writer = rs.getString("writer");
+                LocalDateTime createdAt = rs.getTimestamp("created_at").toLocalDateTime();
+                int viewCount = rs.getInt("view_count");
+                int commentCount = rs.getInt("comment_count");
                 // 한 행 정보 가져와 memberVO에 Setter 이용하여 저장
                 Board board = new Board();
                 board.setId(id);
@@ -76,8 +76,8 @@ public class BoardJdbcDao implements BoardDao {
             e.printStackTrace();
         } finally {
             try {
-                resultSet.close();
-                preparedStatement.close();
+                rs.close();
+                ps.close();
                 conn.close();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -87,13 +87,53 @@ public class BoardJdbcDao implements BoardDao {
     }
 
     @Override
-    public Board getById(Long id) {
-        return null;
+    public Board getById(Long id_) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        Board board = new Board();
+
+        try {
+            conn = connDB();
+            String query = "select * from Board where id=?";
+            ps = conn.prepareStatement(query);
+            ps.setLong(1, id_);
+
+            rs = ps.executeQuery();
+
+            while(rs.next()) { // 결과 세트에서 한 행씩 처리
+                String content = rs.getString("content");
+                String writer = rs.getString("writer");
+                LocalDateTime createdAt = rs.getTimestamp("created_at").toLocalDateTime();
+                int viewCount = rs.getInt("view_count");
+                int commentCount = rs.getInt("comment_count");
+                // 한 행 정보 가져와 memberVO에 Setter 이용하여 저장
+                board.setId(rs.getLong("id"));
+                board.setTitle(rs.getString("title"));
+                board.setContent(rs.getString("content"));
+                board.setWriter(rs.getString("writer"));
+                board.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+                board.setViewCount(rs.getInt("view_count"));
+                board.setViewCount(rs.getInt("comment_count"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                rs.close();
+                ps.close();
+                conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return board;
     }
 
     @Override
     public void save(Board board) {
-
+        
     }
 
     @Override
