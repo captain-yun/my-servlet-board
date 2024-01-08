@@ -56,10 +56,31 @@ public class BoardController extends HttpServlet {
             return;
 
         } else if (command.equals("/board/updateForm")) {
+
+            Board board = boardService.getBoard(Long.parseLong(request.getParameter("id")));
+            request.setAttribute("board", board);
             view += "updateForm.jsp";
+
         } else if (command.equals("/board/update")) {
 
+            // 수정폼에서 보낸 데이터를 읽는다.
+            // 수정하려는 데이터를 수정한다.
+            Long id = Long.parseLong(request.getParameter("id"));
+            String title = request.getParameter("title");
+            String content = request.getParameter("content");
+
+            boardService.updateBoard(new Board(id, title, content, null, null, 0, 0));
+
+             response.sendRedirect("/board/list");
+             return;
+
         } else if (command.equals("/board/delete")) {
+
+            Board board = boardService.getBoard(Long.parseLong(request.getParameter("id")));
+            boardService.deleteBoard(board);
+
+            response.sendRedirect("/board/list");
+            return;
 
         } else if (command.contains("/board/detail")) {
             // id에 해당하는 게시판 하나를 가져오면 된다.
