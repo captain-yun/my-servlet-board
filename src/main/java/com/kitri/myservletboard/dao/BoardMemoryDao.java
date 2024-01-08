@@ -41,6 +41,21 @@ public class BoardMemoryDao implements BoardDao {
 
     @Override
     public void save(Board board) {
+        // id 자동생성 로직 (단, id가 기존의 id와 중복되지 않도록)
+        Long id = 0L;
+        boolean flag = false;
+        while (!flag) {
+            flag = true;
+            id++; // 1씩 증가 2, 3, ... 10, 11
+            for (Board board_ : memoryBoardDB) {
+                if (id == board_.getId()) {
+                    // 중복
+                    flag = false;
+                    break;
+                };
+            }
+        }
+        board.setId(id);
         memoryBoardDB.add(board);
     }
 

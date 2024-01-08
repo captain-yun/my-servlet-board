@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @WebServlet("/board/*")
@@ -26,6 +27,7 @@ public class BoardController extends HttpServlet {
         // URL을 파싱해서 어떤 요청인지 파악
         out.println(request.getRequestURI());
 
+        request.setCharacterEncoding("UTF-8");
         String requestURI = request.getRequestURI();
         String contextPath = request.getContextPath();
         String command = requestURI.substring(contextPath.length());
@@ -39,6 +41,19 @@ public class BoardController extends HttpServlet {
         } else if (command.equals("/board/createForm")) {
             view += "createForm.jsp";
         } else if (command.equals("/board/create")) {
+
+            // 데이터를 읽고 ( ok )
+            // 등록 시키면 된다
+
+            String title = request.getParameter("title");
+            String content = request.getParameter("content");
+            String writer = request.getParameter("writer");
+
+            Board board = new Board(null, title, content, writer, LocalDateTime.now(), 0, 0);
+            boardService.addBoard(board);
+
+            response.sendRedirect("/board/list");
+            return;
 
         } else if (command.equals("/board/updateForm")) {
             view += "updateForm.jsp";
