@@ -46,6 +46,15 @@ public class BoardController extends HttpServlet {
 
         } else if (command.equals("/board/delete")) {
 
+        } else if (command.contains("/board/detail")) {
+            // id에 해당하는 게시판 하나를 가져오면 된다.
+            // /board/detail?id=3
+            Long id = Long.parseLong(request.getParameter("id"));
+            Board board = boardService.getBoard(id);
+            // board 데이터를 detail.jsp 에 전달하기 위해 어딘가에 담아줘야한다.
+            request.setAttribute("board", board);
+
+            view += "detail.jsp";
         }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(view);
