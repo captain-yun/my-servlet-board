@@ -44,7 +44,7 @@ public class BoardController extends HttpServlet {
             if (page != null) pagination.setCurrentPage(Integer.parseInt(page));
             boards = boardService.getBoards(pagination);
 
-            request.setAttribute("paging", pagination);
+            request.setAttribute("pagination", pagination);
             request.setAttribute("boards", boards);
             view += "list.jsp";
 
