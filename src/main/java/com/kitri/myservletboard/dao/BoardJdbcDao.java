@@ -75,22 +75,123 @@ public class BoardJdbcDao implements BoardDao {
     }
 
     @Override
-    public Board getById(Long id) {
-        return null;
+    public Board getById(Long id_) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        Board board = new Board();
+
+        try {
+            conn = connectDB();
+            String query = "select * from Board where id=?";
+            ps = conn.prepareStatement(query);
+            ps.setLong(1, id_);
+
+            rs = ps.executeQuery();
+
+            while(rs.next()) {
+                String content = rs.getString("content");
+                String writer = rs.getString("writer");
+                LocalDateTime createdAt = rs.getTimestamp("created_at").toLocalDateTime();
+                int viewCount = rs.getInt("view_count");
+                int commentCount = rs.getInt("comment_count");
+
+                board.setId(rs.getLong("id"));
+                board.setTitle(rs.getString("title"));
+                board.setContent(rs.getString("content"));
+                board.setWriter(rs.getString("writer"));
+                board.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+                board.setViewCount(rs.getInt("view_count"));
+                board.setViewCount(rs.getInt("comment_count"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                rs.close();
+                ps.close();
+                conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return board;
     }
 
     @Override
     public void save(Board board) {
+        Connection conn = null;
+        PreparedStatement ps = null;
 
+        try {
+            conn = connectDB();
+
+            String sql = "INSERT INTO board (title, content, writer) VALUES (?, ?, ?)";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, board.getTitle());
+            ps.setString(2, board.getContent());
+            ps.setString(3, board.getWriter());
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+
+        } finally {
+            try {
+                ps.close();
+                conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
     public void update(Board board) {
+        Connection conn = null;
+        PreparedStatement ps = null;
 
+        try {
+            conn = connectDB();
+            String query = "UPDATE board SET title = ?, content = ? WHERE id = ?";
+            ps = conn.prepareStatement(query);
+            ps.setString(1, board.getTitle());
+            ps.setString(2, board.getContent());
+            ps.setLong(3, board.getId());
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                ps.close();
+                conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
     public void delete(Board board) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = connectDB();
+            String query = "DELETE FROM board WHERE id = ?";
+            ps = conn.prepareStatement(query);
+            ps.setLong(1, board.getId());
+            ps.executeUpdate();
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                ps.close();
+                conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
