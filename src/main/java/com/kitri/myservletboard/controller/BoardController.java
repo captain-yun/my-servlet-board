@@ -1,6 +1,7 @@
 package com.kitri.myservletboard.controller;
 
 import com.kitri.myservletboard.data.Board;
+import com.kitri.myservletboard.data.Pagination;
 import com.kitri.myservletboard.service.BoardService;
 
 import javax.servlet.RequestDispatcher;
@@ -35,16 +36,25 @@ public class BoardController extends HttpServlet {
         String view = "/view/board/";
 
         if (command.equals("/board/list")) {
-            ArrayList<Board> boards = boardService.getBoards(); // 게시판 리스트
+
+            // /board/list?page=3
+            String page = request.getParameter("page");
+            if (page == null) page = "1";
+            Pagination pagination = new Pagination(Integer.parseInt(page));
+
+            ArrayList<Board> boards =
+                    boardService.getBoards(pagination); // 게시판 리스트
+
+            request.setAttribute("pagination", pagination); // 페이지네이션 정보
             request.setAttribute("boards", boards);
             view += "list.jsp";
+
         } else if (command.equals("/board/createForm")) {
             view += "createForm.jsp";
         } else if (command.equals("/board/create")) {
 
             // 데이터를 읽고 ( ok )
             // 등록 시키면 된다
-
             String title = request.getParameter("title");
             String content = request.getParameter("content");
             String writer = request.getParameter("writer");
