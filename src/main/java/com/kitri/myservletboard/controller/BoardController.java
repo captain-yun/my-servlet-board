@@ -2,6 +2,7 @@ package com.kitri.myservletboard.controller;
 
 import com.kitri.myservletboard.data.Board;
 import com.kitri.myservletboard.data.Pagination;
+import com.kitri.myservletboard.data.Search;
 import com.kitri.myservletboard.service.BoardService;
 
 import javax.servlet.RequestDispatcher;
@@ -42,10 +43,17 @@ public class BoardController extends HttpServlet {
             if (page == null) page = "1";
             Pagination pagination = new Pagination(Integer.parseInt(page));
 
+            String type = request.getParameter("type");
+            if (type == null) type = "true";
+            String keyword = request.getParameter("keyword");
+            if (keyword == null) keyword = "true";
+            Search search = new Search(type, keyword);
+
             ArrayList<Board> boards =
-                    boardService.getBoards(pagination); // 게시판 리스트
+                    boardService.getBoards(pagination, search); // 게시판 리스트
 
             request.setAttribute("pagination", pagination); // 페이지네이션 정보
+            request.setAttribute("search", search);
             request.setAttribute("boards", boards);
             view += "list.jsp";
 

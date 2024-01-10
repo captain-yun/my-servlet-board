@@ -2,6 +2,8 @@ package com.kitri.myservletboard.dao;
 
 import com.kitri.myservletboard.data.Board;
 import com.kitri.myservletboard.data.Pagination;
+import com.kitri.myservletboard.data.Search;
+import com.kitri.myservletboard.util.QueryUtil;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -34,6 +36,48 @@ public class BoardJdbcDao implements BoardDao {
         }
         return conn;
     }
+
+    @Override
+    public ArrayList<Board> getAll(Pagination pagination, Search search) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        ArrayList<Board> boards = new ArrayList<>();
+
+        try {
+            connection = connectDB();
+            String sql = QueryUtil.buildGetBoardsQuery(pagination, search);
+            ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            while(rs.next()) {
+                Long id = rs.getLong("id");
+                String title = rs.getString("title");
+                String content = rs.getString("content");
+                String writer = rs.getString("writer");
+                LocalDateTime createdAt = rs.getTimestamp("created_at").toLocalDateTime();
+                int viewCount = rs.getInt("view_count");
+                int commentCount = rs.getInt("comment_count");
+
+                boards.add(new Board(id, title, content, writer, createdAt, viewCount, commentCount));
+            }
+
+        } catch (Exception e) {
+
+        } finally {
+            try {
+                rs.close();
+                ps.close();
+                connection.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return boards;
+    }
+
     @Override
     public ArrayList<Board> getAll(Pagination pagination) {
         Connection connection = null;
@@ -250,6 +294,39 @@ public class BoardJdbcDao implements BoardDao {
 
             String sql = "SELECT count(*) FROM board";
 
+            ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
+            rs.next();
+
+            count = rs.getInt("count(*)");
+
+        } catch (Exception e) {
+
+        } finally {
+            try {
+                rs.close();
+                ps.close();
+                connection.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return count;
+    };
+
+
+    public int count(Search search) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        int count = 0;
+
+        try {
+            connection = connectDB();
+
+            String sql = QueryUtil.buildCountQuery(search);
             ps = connection.prepareStatement(sql);
             rs = ps.executeQuery();
             rs.next();
