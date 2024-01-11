@@ -14,14 +14,17 @@
     Search search = (Search) request.getAttribute("search");
     String type = "title";
     String keyword = "";
+    String period = "";
     if (!search.isEmpty()) {
       type = search.getType();
       keyword = search.getKeyword();
+      period = search.getPeriod();
     }
   %>
   <jsp:include page="/view/common/header.jsp">
     <jsp:param name="type" value="<%=type%>"/>
     <jsp:param name="keyword" value="<%=keyword%>"/>
+    <jsp:param name="period" value="<%=period%>"/>
   </jsp:include>
   <div>
     <h2 style="text-align: center; margin-top: 100px;"><b>게시판 목록</b></h2>

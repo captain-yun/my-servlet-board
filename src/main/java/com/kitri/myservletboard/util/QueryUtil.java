@@ -10,16 +10,36 @@ public class QueryUtil {
     public static String buildCountQuery(Search search) {
         String sql = "";
 
-        if (search.getType().equals("title") && !search.getKeyword().equals("")) {
-            sql = "SELECT count(*) FROM board WHERE title LIKE '%" + search.getKeyword() +"%'";
-        } else if (search.getType().equals("writer")) {
-            sql = "SELECT count(*) FROM board WHERE writer='" + search.getKeyword() + "'";
-        } else {
-            sql = "SELECT count(*) FROM board WHERE true";
-        }
-
+        sql += buildSelect(search, "count(*)");
         sql += buildPeriod(search.getPeriod());
 
+        return sql;
+    }
+
+    public static String buildGetBoardsQuery(Pagination pagination, Search search) {
+        String sql = "";
+
+        sql += buildSelect(search, "*");
+        sql += buildPeriod(search.getPeriod());
+        sql += buildLimit(pagination);
+
+        buildLimit(pagination);
+        return sql;
+    }
+
+    private static String buildLimit(Pagination pagination) {
+        return " LIMIT " + (pagination.getPage() - 1) * pagination.getMaxRecordsPerPage() + ", " + pagination.getMaxRecordsPerPage();
+    }
+
+    private static String buildSelect(Search search, String column) {
+        String sql = "";
+        if (search.getType().equals("title") && !search.getKeyword().equals("")) {
+            sql = "SELECT " + column + " FROM board WHERE title LIKE '%" + search.getKeyword() +"%'";
+        } else if (search.getType().equals("writer")) {
+            sql = "SELECT " + column + " FROM board WHERE writer='" + search.getKeyword() + "'";
+        } else {
+            sql = "SELECT " + column + " FROM board WHERE true";
+        }
         return sql;
     }
 
@@ -47,22 +67,5 @@ public class QueryUtil {
             return " AND created_at BETWEEN '" + startDate + "' and '" + endDate + "'";
         }
         return "";
-    }
-
-    public static String buildGetBoardsQuery(Pagination pagination, Search search) {
-        String sql = "";
-
-        if (search.getType().equals("title") && !search.getKeyword().equals("")) {
-            sql = "SELECT * FROM board WHERE title LIKE '%" + search.getKeyword() +"%'";
-        } else if (search.getType().equals("writer")) {
-            sql = "SELECT * FROM board WHERE writer='" + search.getKeyword() + "'";
-        } else {
-            sql = "SELECT * FROM board WHERE true";
-        }
-
-        sql += buildPeriod(search.getPeriod());
-        sql += " LIMIT " + (pagination.getPage() - 1) * pagination.getMaxRecordsPerPage() + ", " + pagination.getMaxRecordsPerPage();
-
-        return sql;
     }
 }

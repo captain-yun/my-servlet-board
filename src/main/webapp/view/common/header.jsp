@@ -15,12 +15,12 @@
     </nav>
     <form class="form-inline my-2 my-lg-0 ml-auto pr-5" action="/board/list">
         <select name="period">
-            <option value="">전체기간</option>
-            <option value="day">1일</option>
-            <option value="week">1주</option>
-            <option value="month">1개월</option>
-            <option value="halfYear">6개월</option>
-            <option value="year">1년</option>
+            <option value="" ${param.period == "" ? "selected": ""}>전체기간</option>
+            <option value="day" ${param.period == "day" ? "selected": ""}>1일</option>
+            <option value="week" ${param.period == "week" ? "selected": ""}>1주</option>
+            <option value="month" ${param.period == "month" ? "selected": ""}>1개월</option>
+            <option value="halfYear" ${param.period == "halfYear" ? "selected": ""}>6개월</option>
+            <option value="year" ${param.period == "year" ? "selected": ""}>1년</option>
         </select>
         &nbsp;
         <select name="type">
