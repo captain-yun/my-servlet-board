@@ -14,14 +14,16 @@
         </ul>
     </nav>
     <form class="form-inline my-2 my-lg-0 ml-auto pr-5" action="/board/list?">
-    <select name="type" class="bootstrap-select">
-        <option value="title" ${param.type == "title" ? "selected": ""}>제목</option>
-        <option value="writer" ${param.type == "writer" ? "selected": ""}>작성자</option>
-    </select>
+        <select name="type">
+            <option value="title" ${param.type == "title" ? "selected": ""}>제목</option>
+            <option value="writer" ${param.type == "writer" ? "selected": ""}>작성자</option>
+        </select>
+        &nbsp;
         <input name="keyword" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" value="${param.keyword}">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
 </header>
 <style>
     .dropdown-toggle, button[type] { background-color: white; color: #1b1b1b; border-color: #1b1b1b}
+    select { height: 60%; border-radius: 5px }
 </style>
