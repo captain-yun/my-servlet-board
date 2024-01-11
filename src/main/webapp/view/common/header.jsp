@@ -13,7 +13,16 @@
             <li><a href="/view/member/login.jsp">로그인</a></li>
         </ul>
     </nav>
-    <form class="form-inline my-2 my-lg-0 ml-auto pr-5" action="/board/list?">
+    <form class="form-inline my-2 my-lg-0 ml-auto pr-5" action="/board/list">
+        <select name="period">
+            <option value="">전체기간</option>
+            <option value="day">1일</option>
+            <option value="week">1주</option>
+            <option value="month">1개월</option>
+            <option value="halfYear">6개월</option>
+            <option value="year">1년</option>
+        </select>
+        &nbsp;
         <select name="type">
             <option value="title" ${param.type == "title" ? "selected": ""}>제목</option>
             <option value="writer" ${param.type == "writer" ? "selected": ""}>작성자</option>

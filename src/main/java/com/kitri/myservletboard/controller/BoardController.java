@@ -47,7 +47,10 @@ public class BoardController extends HttpServlet {
             if (type == null) type = "true";
             String keyword = request.getParameter("keyword");
             if (keyword == null) keyword = "true";
-            Search search = new Search(type, keyword);
+            String period = request.getParameter("period");
+            if (period == null) period = "";
+
+            Search search = new Search(type, keyword, period);
 
             ArrayList<Board> boards =
                     boardService.getBoards(pagination, search); // 게시판 리스트

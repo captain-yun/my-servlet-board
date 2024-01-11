@@ -71,7 +71,10 @@
             String searchParam = "";
 //
             if (!search.isEmpty()) {
-              searchParam += "&type=" + search.getType() + "&keyword=" + search.getKeyword();
+              searchParam
+                      += "&type=" + search.getType()
+                      + "&keyword=" + search.getKeyword()
+                      + "&period=" + search.getPeriod();
             }
 
             if (pagination.isHasPrev()) {
@@ -106,12 +109,6 @@
               <a class="page-link" href="/board/list?page=<%=pagination.getEndPageOnScreen() + 1%><%=searchParam%>">Next</a>
             </li>
           <%}%>
-
-
-
-
-
-
         </ul>
       </nav>
     </div>
