@@ -1,11 +1,8 @@
 package com.kitri.myservletboard.service;
 
-import com.kitri.myservletboard.dao.board.BoardJdbcDao;
 import com.kitri.myservletboard.dao.member.MemberDao;
 import com.kitri.myservletboard.dao.member.MemberJdbcDao;
 import com.kitri.myservletboard.data.Member;
-
-import java.util.ArrayList;
 
 public class MemberService {
     MemberDao memberDao = MemberJdbcDao.getInstance();
@@ -15,16 +12,21 @@ public class MemberService {
     public static MemberService getInstance() {
         return instance;
     }
-    public Member getBoard(Long id) {
+    public Member getMember(Long id) {
         return memberDao.getById(id);
     }
-    public void addBoard(Member member) {
+    public boolean joinMember(Member member) {
+        if ( memberDao.checkDuplicatedLoginId(member.getLoginId()) ) {
+            System.out.println("중복됨");
+            return false;
+        }
         memberDao.save(member);
+        return true;
     }
-    public void updateBoard(Member member) {
+    public void updateMember(Member member) {
         memberDao.update(member);
     }
-    public void deleteBoard(Member member) {
+    public void deleteMember(Member member) {
         memberDao.delete(member);
     }
 }

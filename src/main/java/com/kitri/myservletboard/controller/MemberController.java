@@ -4,7 +4,9 @@ import com.kitri.myservletboard.data.Board;
 import com.kitri.myservletboard.data.Member;
 import com.kitri.myservletboard.data.Pagination;
 import com.kitri.myservletboard.data.Search;
+import com.kitri.myservletboard.service.MemberService;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +18,9 @@ import java.util.ArrayList;
 
 @WebServlet("/member/*")
 public class MemberController extends HttpServlet {
+
+    MemberService memberService = MemberService.getInstance();
+
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -35,19 +40,25 @@ public class MemberController extends HttpServlet {
 
         if (command.equals("/member/join")) {
 
-            String id = request.getParameter("id");
+            String id = request.getParameter("loginId");
             String password = request.getParameter("password");
             String name = request.getParameter("name");
             String email = request.getParameter("email");
 
             Member member = new Member(id, password, name, email);
 
-
-
-            view += "list.jsp";
+            if (! memberService.joinMember(member)) {
+                view += "joinFail.jsp";
+            } else {
+                request.setAttribute("member", member);
+                view += "joinSuccess.jsp";
+            }
 
         } else if (command.equals("/member/login")) {
 
         }
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher(view);
+        dispatcher.forward(request, response);
     }
 }

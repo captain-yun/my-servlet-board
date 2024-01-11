@@ -12,11 +12,11 @@
                 <h4 class="mb-3"><b>회원 가입</b></h4>
                 <hr>
                 <br>
-                <form class="validation-form" novalidate>
+                <form class="validation-form" novalidate action="/member/join">
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="name">이름</label>
-                            <input type="text" class="form-control" id="name" placeholder="이름을 입력해주세요" value=""
+                            <input name="name" type="text" class="form-control" id="name" placeholder="이름을 입력해주세요" value=""
                                 required>
                             <div class="invalid-feedback">
                                 이름을 입력해주세요.
@@ -24,7 +24,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="name">아이디</label>
-                            <input type="text" class="form-control" id="userId" placeholder="아이디를 입력해주세요" value=""
+                            <input name="loginId" type="text" class="form-control" id="userId" placeholder="아이디를 입력해주세요" value=""
                                 required>
                             <div class="invalid-feedback">
                                 아이디를 입력해주세요.
@@ -33,16 +33,16 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="nickname">비밀번호</label>
-                            <input type="password" class="form-control" id="password" placeholder="비밀번호를 입력해주세요"
+                            <label for="password">비밀번호</label>
+                            <input name="password" type="password" class="form-control" id="password" placeholder="비밀번호를 입력해주세요"
                                 value="" required>
                             <div class="invalid-feedback">
                                 비밀번호를 입력해주세요.
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="nickname">비밀번호 확인</label>
-                            <input type="password" class="form-control" id="password" placeholder="비밀번호를 한 번 더 입력해주세요"
+                            <label for="password2">비밀번호 확인</label>
+                            <input type="password" class="form-control" id="password2" placeholder="비밀번호를 한 번 더 입력해주세요"
                                 value="" required>
                             <div class="invalid-feedback">
                                 비밀번호를 입력해주세요.
@@ -52,7 +52,7 @@
 
                     <div class="mb-3">
                         <label for="email">이메일</label>
-                        <input type="email" class="form-control" id="email" placeholder="Bootstrap@example.com"
+                        <input name="email" type="email" class="form-control" id="email" placeholder="Bootstrap@example.com"
                             required>
                         <div class="invalid-feedback">
                             이메일을 입력해주세요.
