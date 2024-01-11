@@ -56,6 +56,10 @@ public class MemberController extends HttpServlet {
 
         } else if (command.equals("/member/login")) {
 
+            String id = request.getParameter("loginId");
+            String password = request.getParameter("password");
+
+
         }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(view);
