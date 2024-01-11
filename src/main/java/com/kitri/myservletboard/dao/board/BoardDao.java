@@ -1,4 +1,4 @@
-package com.kitri.myservletboard.dao;
+package com.kitri.myservletboard.dao.board;
 
 import com.kitri.myservletboard.data.Board;
 import com.kitri.myservletboard.data.Pagination;

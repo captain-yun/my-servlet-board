@@ -1,7 +1,7 @@
 package com.kitri.myservletboard.service;
 
-import com.kitri.myservletboard.dao.BoardDao;
-import com.kitri.myservletboard.dao.BoardJdbcDao;
+import com.kitri.myservletboard.dao.board.BoardDao;
+import com.kitri.myservletboard.dao.board.BoardJdbcDao;
 import com.kitri.myservletboard.data.Board;
 import com.kitri.myservletboard.data.Pagination;
 import com.kitri.myservletboard.data.Search;

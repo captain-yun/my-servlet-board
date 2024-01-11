@@ -1,9 +1,8 @@
-package com.kitri.myservletboard.dao;
+package com.kitri.myservletboard.dao.board;
 
 import com.kitri.myservletboard.data.Board;
 import com.kitri.myservletboard.data.Pagination;
 import com.kitri.myservletboard.data.Search;
-import com.kitri.myservletboard.service.BoardService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
