@@ -2,6 +2,7 @@ package com.kitri.myservletboard.service;
 
 import com.kitri.myservletboard.dao.member.MemberDao;
 import com.kitri.myservletboard.dao.member.MemberJdbcDao;
+import com.kitri.myservletboard.data.LoginRequestInfo;
 import com.kitri.myservletboard.data.Member;
 
 public class MemberService {
@@ -28,5 +29,18 @@ public class MemberService {
     }
     public void deleteMember(Member member) {
         memberDao.delete(member);
+    }
+
+    public boolean authenticateLoginInfo(LoginRequestInfo loginRequestInfo) {
+        // 로그인하려는 ID가 있는지
+        // 비밀번호가 맞는지
+        Member member = memberDao.getByLoginId(loginRequestInfo.getLoginId());
+        if (member == null) {
+            return false;
+        }
+        if (! member.getPassword().equals(loginRequestInfo.getPassword())) {
+            return false;
+        }
+        return true;
     }
 }

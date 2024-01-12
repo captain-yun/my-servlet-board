@@ -13,6 +13,5 @@ public interface MemberDao {
     public void save(Member member);
     public void update(Member member);
     public void delete(Member member);
-
     public boolean checkDuplicatedLoginId(String loginId);
 }

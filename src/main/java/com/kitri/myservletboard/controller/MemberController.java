@@ -1,9 +1,6 @@
 package com.kitri.myservletboard.controller;
 
-import com.kitri.myservletboard.data.Board;
-import com.kitri.myservletboard.data.Member;
-import com.kitri.myservletboard.data.Pagination;
-import com.kitri.myservletboard.data.Search;
+import com.kitri.myservletboard.data.*;
 import com.kitri.myservletboard.service.MemberService;
 
 import javax.servlet.RequestDispatcher;
@@ -59,6 +56,12 @@ public class MemberController extends HttpServlet {
             String id = request.getParameter("loginId");
             String password = request.getParameter("password");
 
+            boolean isValid
+                    = memberService.authenticateLoginInfo(new LoginRequestInfo(id, password));
+
+            if(isValid == false) {
+                
+            }
 
         }
 
