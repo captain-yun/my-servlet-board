@@ -83,7 +83,7 @@ public class MemberJdbcDao implements MemberDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        Member member = new Member();
+        Member member = null;
 
         try {
             conn = connectDB();
@@ -94,14 +94,13 @@ public class MemberJdbcDao implements MemberDao {
             rs = ps.executeQuery();
 
             while(rs.next()) {
-
-                member.setId(rs.getString("id"));
+                member = new Member();
+                member.setId(rs.getLong("id"));
                 member.setLoginId(rs.getString("login_id"));
                 member.setPassword(rs.getString("password"));
                 member.setName(rs.getString("name"));
                 member.setEmail(rs.getString("email"));
                 member.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
-
             }
         } catch (Exception e) {
             e.printStackTrace();

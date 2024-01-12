@@ -1,3 +1,5 @@
+<%@ page import="com.kitri.myservletboard.data.Member" %>
+<%@ page import="com.kitri.myservletboard.data.Board" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -7,7 +9,10 @@
 </jsp:include>
 <body class="sb-nav-fixed">
 <jsp:include page="/view/common/header.jsp"/>
-
+<%
+    Member loginMember = (Member) session.getAttribute("loginMember");
+    Board board = (Board) request.getAttribute("board");
+%>
 <main class="mt-5 pt-5">
     <div class="container-fluid px-4 ">
 
@@ -41,10 +46,16 @@
                 <div class="d-flex flex-row-reverse mb-3 mr-3">
                     &nbsp
                     &nbsp
+                    <%
+                        if(loginMember != null) {
+                        if(loginMember.getId().equals(board.getMemberId())) {
+                    { %>
                     <a href="/board/delete?id=${board.getId()}" class="btn btn-secondary btn-sm" onclick="return confirm('삭제하시겠습니까?')"><small>삭제하기</small></a>
-                    &nbsp
-                    <a href="/board/updateForm?id=${board.getId()}" class="btn btn-secondary btn-sm"><small>수정하기</small></a>
-                    &nbsp
+                                &nbsp
+                                <a href="/board/updateForm?id=${board.getId()}" class="btn btn-secondary btn-sm"><small>수정하기</small></a>
+                                &nbsp
+                    <%}}}%>
+
                     <a href="/board/list" class="btn btn-secondary btn-sm"><small>목록으로</small></a>
                     &nbsp
                 </div>

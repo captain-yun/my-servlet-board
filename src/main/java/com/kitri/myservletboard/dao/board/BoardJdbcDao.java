@@ -178,12 +178,6 @@ public class BoardJdbcDao implements BoardDao {
             rs = ps.executeQuery();
 
             while(rs.next()) {
-                String content = rs.getString("content");
-                String writer = rs.getString("writer");
-                LocalDateTime createdAt = rs.getTimestamp("created_at").toLocalDateTime();
-                int viewCount = rs.getInt("view_count");
-                int commentCount = rs.getInt("comment_count");
-
                 board.setId(rs.getLong("id"));
                 board.setTitle(rs.getString("title"));
                 board.setContent(rs.getString("content"));
@@ -191,6 +185,7 @@ public class BoardJdbcDao implements BoardDao {
                 board.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
                 board.setViewCount(rs.getInt("view_count"));
                 board.setViewCount(rs.getInt("comment_count"));
+                board.setMemberId(rs.getLong("member_id"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -214,11 +209,12 @@ public class BoardJdbcDao implements BoardDao {
         try {
             conn = connectDB();
 
-            String sql = "INSERT INTO board (title, content, writer) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO board (title, content, writer, member_id) VALUES (?, ?, ?, ?)";
             ps = conn.prepareStatement(sql);
             ps.setString(1, board.getTitle());
             ps.setString(2, board.getContent());
             ps.setString(3, board.getWriter());
+            ps.setLong(4, board.getMemberId());
             ps.executeUpdate();
 
         } catch (Exception e) {

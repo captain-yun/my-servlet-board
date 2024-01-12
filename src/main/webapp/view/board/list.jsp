@@ -3,6 +3,7 @@
 <%@ page import="com.kitri.myservletboard.data.Pagination" %>
 <%@ page import="com.kitri.myservletboard.data.Search" %>
 <%@ page import="com.mysql.cj.util.StringUtils" %>
+<%@ page import="com.kitri.myservletboard.data.Member" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,6 +12,7 @@
 </jsp:include>
 <body>
   <%
+    Member member = (Member) session.getAttribute("loginMember");
     Search search = (Search) request.getAttribute("search");
     String type = "title";
     String keyword = "";
@@ -62,7 +64,9 @@
         </tbody>
       </table>
       <div>
-        <a href="/board/createForm" role="button" class="btn btn-outline-dark">글쓰기</a>
+        <% if( member != null ) { %>
+          <a href="/board/createForm" role="button" class="btn btn-outline-dark">글쓰기</a>
+        <%}%>
       </div>
       <div class="d-flex justify-content-center">
       <nav aria-label="Page navigation example">

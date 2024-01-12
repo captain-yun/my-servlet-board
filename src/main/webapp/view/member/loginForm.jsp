@@ -7,7 +7,7 @@
 <body>
 <jsp:include page="/view/common/header.jsp"/>
 <div class="login-form">
-    <form action="/board/login">
+    <form action="/member/login">
         <h2><b>Bootstrap</b></h2>
         <hr>
         <br>

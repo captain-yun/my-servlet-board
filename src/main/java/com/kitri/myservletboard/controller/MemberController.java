@@ -9,9 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 @WebServlet("/member/*")
 public class MemberController extends HttpServlet {
@@ -56,13 +56,36 @@ public class MemberController extends HttpServlet {
             String id = request.getParameter("loginId");
             String password = request.getParameter("password");
 
-            boolean isValid
+            Member loginMember
                     = memberService.authenticateLoginInfo(new LoginRequestInfo(id, password));
 
-            if(isValid == false) {
-                
+            if(loginMember == null) {
+                response.sendRedirect("/member/loginForm");
+                return;
             }
 
+            HttpSession session = request.getSession();
+            session.setAttribute("loginMember", loginMember);
+            response.sendRedirect("/board/list");
+            return;
+
+        } else if (command.equals("/member/logout")) {
+
+            HttpSession session = request.getSession();
+            Object member = session.getAttribute("loginMember");
+            if (member != null) {
+                session.invalidate();
+            }
+
+            response.sendRedirect("/member/loginForm");
+            return;
+
+        } else if (command.equals("/member/joinForm")) {
+            view += "joinForm.jsp";
+        } else if (command.equals("/member/loginForm")) {
+            view += "loginForm.jsp";
+        } else if (command.equals("/member/loginInfoUpdateForm")) {
+            view += "loginInfoUpdateForm.jsp";
         }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(view);

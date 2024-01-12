@@ -1,6 +1,7 @@
 package com.kitri.myservletboard.controller;
 
 import com.kitri.myservletboard.data.Board;
+import com.kitri.myservletboard.data.Member;
 import com.kitri.myservletboard.data.Pagination;
 import com.kitri.myservletboard.data.Search;
 import com.kitri.myservletboard.service.BoardService;
@@ -11,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
@@ -21,6 +23,9 @@ public class BoardController extends HttpServlet {
     BoardService boardService = BoardService.getInstance();
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        HttpSession session = request.getSession();
+        Member loginMember = (Member) session.getAttribute("loginMember");
 
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
@@ -68,9 +73,9 @@ public class BoardController extends HttpServlet {
             // 등록 시키면 된다
             String title = request.getParameter("title");
             String content = request.getParameter("content");
-            String writer = request.getParameter("writer");
+//            String writer = request.getParameter("writer");
 
-            Board board = new Board(null, title, content, writer, LocalDateTime.now(), 0, 0);
+            Board board = new Board(null, title, content, loginMember.getName(), LocalDateTime.now(), 0, 0, loginMember.getId());
             boardService.addBoard(board);
 
             response.sendRedirect("/board/list");
@@ -92,8 +97,8 @@ public class BoardController extends HttpServlet {
 
             boardService.updateBoard(new Board(id, title, content, null, null, 0, 0));
 
-             response.sendRedirect("/board/list");
-             return;
+            response.sendRedirect("/board/list");
+            return;
 
         } else if (command.equals("/board/delete")) {
 

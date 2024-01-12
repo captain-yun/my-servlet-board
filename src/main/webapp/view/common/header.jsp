@@ -1,3 +1,4 @@
+<%@ page import="com.kitri.myservletboard.data.Member" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <header class="d-flex flex-row">
     <a class="logo" href="/board/list">
@@ -8,9 +9,9 @@
     <nav>
         <ul class="nav-items">
             <li><a href="/board/list">게시글목록</a></li>
-            <li><a href="/view/member/join.jsp">회원가입</a></li>
-            <li><a href="/view/member/registration.jsp">회원정보수정</a></li>
-            <li><a href="/view/member/login.jsp">로그인</a></li>
+            <li><a href="/member/joinForm">회원가입</a></li>
+            <li><a href="/member/loginInfoUpdateForm">회원정보수정</a></li>
+            <li><a href="<%=session.getAttribute("loginMember") != null ? "/member/logout" : "/member/loginForm"%>"><%=session.getAttribute("loginMember") != null ? "로그아웃" : "로그인"%></a></li>
         </ul>
     </nav>
     <form class="form-inline my-2 my-lg-0 ml-auto pr-5" action="/board/list">

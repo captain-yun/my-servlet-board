@@ -3,7 +3,7 @@ package com.kitri.myservletboard.data;
 import java.time.LocalDateTime;
 
 public class Member {
-    String id;
+    Long id;
     String loginId;
     String password;
     String name;
@@ -13,14 +13,14 @@ public class Member {
     public Member() {
     }
 
-    public Member(String id, String password, String name, String email) {
-        this.loginId = id;
+    public Member(String loginId, String password, String name, String email) {
+        this.loginId = loginId;
         this.password = password;
         this.name = name;
         this.email = email;
     }
 
-    public Member(String id, String loginId, String password, String name, String email, LocalDateTime createdAt) {
+    public Member(Long id, String loginId, String password, String name, String email, LocalDateTime createdAt) {
         this.id = id;
         this.loginId = loginId;
         this.password = password;
@@ -29,11 +29,11 @@ public class Member {
         this.createdAt = createdAt;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public String getLoginId() {

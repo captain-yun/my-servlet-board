@@ -31,16 +31,16 @@ public class MemberService {
         memberDao.delete(member);
     }
 
-    public boolean authenticateLoginInfo(LoginRequestInfo loginRequestInfo) {
+    public Member authenticateLoginInfo(LoginRequestInfo loginRequestInfo) {
         // 로그인하려는 ID가 있는지
         // 비밀번호가 맞는지
         Member member = memberDao.getByLoginId(loginRequestInfo.getLoginId());
         if (member == null) {
-            return false;
+            return null;
         }
         if (! member.getPassword().equals(loginRequestInfo.getPassword())) {
-            return false;
+            return null;
         }
-        return true;
+        return member;
     }
 }
