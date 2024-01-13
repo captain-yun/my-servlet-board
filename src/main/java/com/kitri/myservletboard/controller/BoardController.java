@@ -120,7 +120,7 @@ public class BoardController extends HttpServlet {
             request.setAttribute("board", board);
 
             view += "detail.jsp";
-        }
+        } 
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(view);
         dispatcher.forward(request, response);

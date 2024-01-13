@@ -1,6 +1,7 @@
 package com.kitri.myservletboard.data;
 
 import java.time.LocalDateTime;
+import java.time.Period;
 
 public class Board {
     private Long id;
@@ -33,6 +34,13 @@ public class Board {
         this.viewCount = viewCount;
         this.commentCount = commentCount;
         this.memberId = memberId;
+    }
+
+    public int getDaysAfterCreated() {
+        LocalDateTime from = this.getCreatedAt() ;
+        LocalDateTime to = LocalDateTime.now() ;
+        Period period = Period.between(from.toLocalDate(), to.toLocalDate());
+        return period.getDays();
     }
 
     public Long getId() {

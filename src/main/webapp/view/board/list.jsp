@@ -4,6 +4,8 @@
 <%@ page import="com.kitri.myservletboard.data.Search" %>
 <%@ page import="com.mysql.cj.util.StringUtils" %>
 <%@ page import="com.kitri.myservletboard.data.Member" %>
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -84,7 +86,7 @@
             <th scope="row"><%= boards.get(i).getId() %></th>
             <td><a href="/board/detail?id=<%= boards.get(i).getId()%>"><%= boards.get(i).getTitle() %></a></td>
             <td><%= boards.get(i).getWriter() %></td>
-            <td><%= boards.get(i).getCreatedAt() %></td>
+            <td><%= boards.get(i).getDaysAfterCreated() == 0 ? "오늘" : boards.get(i).getDaysAfterCreated() + "일전" %></td>
             <td><%= boards.get(i).getViewCount() %></td>
             <td><%= boards.get(i).getCommentCount() %></td>
           </tr>
@@ -108,11 +110,11 @@
             if (pagination.isHasPrev()) {
           %>
             <li class="page-item">
-              <a class="page-link" href="/board/list?page=<%=pagination.getStartPageOnScreen() - 1%>" tabindex="-1" aria-disabled="true">Previous</a>
+              <a class="page-link" href="/board/list?page=<%=pagination.getStartPageOnScreen() - 1%><%=searchParam%>" tabindex="-1" aria-disabled="true">Previous</a>
             </li>
           <%} else {%>
             <li class="page-item disabled">
-              <a class="page-link" href="/board/list?page=<%=pagination.getStartPageOnScreen() - 1%>" tabindex="-1" aria-disabled="true">Previous</a>
+              <a class="page-link" href="/board/list?page=<%=pagination.getStartPageOnScreen() - 1%><%=searchParam%>" tabindex="-1" aria-disabled="true">Previous</a>
             </li>
           <%}%>
 
