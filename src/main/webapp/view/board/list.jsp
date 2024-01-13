@@ -22,14 +22,46 @@
       keyword = search.getKeyword();
       period = search.getPeriod();
     }
+    Pagination pagination = (Pagination) request.getAttribute("pagination");
+
+    String searchParam = "";
+
+    if (!search.isEmpty()) {
+      searchParam
+              += "&type=" + search.getType()
+              + "&keyword=" + search.getKeyword()
+              + "&period=" + search.getPeriod()
+              + "&orderBy=" + search.getOrderBy()
+              + "&maxRecordsPerPage=" + pagination.getMaxRecordsPerPage();
+    }
   %>
   <jsp:include page="/view/common/header.jsp">
     <jsp:param name="type" value="<%=type%>"/>
     <jsp:param name="keyword" value="<%=keyword%>"/>
     <jsp:param name="period" value="<%=period%>"/>
   </jsp:include>
-  <div>
-    <h2 style="text-align: center; margin-top: 100px;"><b>게시판 목록</b></h2>
+  <div class="d-flex justify-content-around position-relative" style="text-align: center; margin-top: 80px; margin-right: 15%; margin-left: 47%">
+    <h2><b>게시판 목록</b></h2>
+    <form class="form-inline my-2 my-lg-0 ml-auto pr-5 mt-5" action="/board/list">
+      <input hidden type="text" name="type" value="<%=type%>"/>
+      <input hidden type="text" name="keyword" value="<%=keyword%>"/>
+      <input hidden type="text" name="period" value="<%=period%>"/>
+      <select name="orderBy" onchange="this.form.submit()">
+        <option value="latest" ${search.getOrderBy() == "latest" ? "selected": ""}>최신순</option>
+        <option value="views" ${search.getOrderBy() == "views" ? "selected": ""}>조회순</option>
+        <option value="accuracy" ${search.getOrderBy() == "accuracy" ? "selected": ""}>정확도순</option>
+      </select>
+      &nbsp
+      <select name="maxRecordsPerPage" onchange="this.form.submit()">
+        <option value="5" ${pagination.getMaxRecordsPerPage() == "5" ? "selected": ""}>5개씩 보기</option>
+        <option value="10" ${pagination.getMaxRecordsPerPage() == "10" ? "selected": ""}>10개씩 보기</option>
+        <option value="15" ${pagination.getMaxRecordsPerPage() == "15" ? "selected": ""}>15개씩 보기</option>
+        <option value="20" ${pagination.getMaxRecordsPerPage() == "20" ? "selected": ""}>20개씩 보기</option>
+        <option value="30" ${pagination.getMaxRecordsPerPage() == "30" ? "selected": ""}>30개씩 보기</option>
+        <option value="40" ${pagination.getMaxRecordsPerPage() == "40" ? "selected": ""}>40개씩 보기</option>
+        <option value="50" ${pagination.getMaxRecordsPerPage() == "50" ? "selected": ""}>50개씩 보기</option>
+      </select>
+    </form>
   </div>
   <div class="container class=d-flex justify-content-center">
     <div class="p-2 border-primary mb-3">
@@ -73,17 +105,6 @@
         <ul class="pagination pagination-sm">
 
           <%
-            Pagination pagination = (Pagination) request.getAttribute("pagination");
-
-            String searchParam = "";
-//
-            if (!search.isEmpty()) {
-              searchParam
-                      += "&type=" + search.getType()
-                      + "&keyword=" + search.getKeyword()
-                      + "&period=" + search.getPeriod();
-            }
-
             if (pagination.isHasPrev()) {
           %>
             <li class="page-item">
