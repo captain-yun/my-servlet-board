@@ -1,9 +1,9 @@
 package com.kitri.myservletboard.controller;
 
-import com.kitri.myservletboard.data.Board;
-import com.kitri.myservletboard.data.Member;
-import com.kitri.myservletboard.data.Pagination;
-import com.kitri.myservletboard.data.Search;
+import com.kitri.myservletboard.data.vo.Board;
+import com.kitri.myservletboard.data.vo.Member;
+import com.kitri.myservletboard.data.common.Pagination;
+import com.kitri.myservletboard.data.common.Search;
 import com.kitri.myservletboard.service.BoardService;
 
 import javax.servlet.RequestDispatcher;

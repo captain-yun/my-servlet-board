@@ -1,9 +1,9 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.kitri.myservletboard.data.Board" %>
-<%@ page import="com.kitri.myservletboard.data.Pagination" %>
-<%@ page import="com.kitri.myservletboard.data.Search" %>
+<%@ page import="com.kitri.myservletboard.data.vo.Board" %>
+<%@ page import="com.kitri.myservletboard.data.common.Pagination" %>
+<%@ page import="com.kitri.myservletboard.data.common.Search" %>
 <%@ page import="com.mysql.cj.util.StringUtils" %>
-<%@ page import="com.kitri.myservletboard.data.Member" %>
+<%@ page import="com.kitri.myservletboard.data.vo.Member" %>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>

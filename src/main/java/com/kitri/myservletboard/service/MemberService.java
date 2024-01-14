@@ -2,8 +2,8 @@ package com.kitri.myservletboard.service;
 
 import com.kitri.myservletboard.dao.member.MemberDao;
 import com.kitri.myservletboard.dao.member.MemberJdbcDao;
-import com.kitri.myservletboard.data.LoginRequestInfo;
-import com.kitri.myservletboard.data.Member;
+import com.kitri.myservletboard.data.request.LoginRequestInfo;
+import com.kitri.myservletboard.data.vo.Member;
 
 public class MemberService {
     MemberDao memberDao = MemberJdbcDao.getInstance();

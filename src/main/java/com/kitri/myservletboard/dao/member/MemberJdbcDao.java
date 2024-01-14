@@ -1,6 +1,6 @@
 package com.kitri.myservletboard.dao.member;
 
-import com.kitri.myservletboard.data.Member;
+import com.kitri.myservletboard.data.vo.Member;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

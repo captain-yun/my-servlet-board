@@ -1,4 +1,4 @@
-package com.kitri.myservletboard.data;
+package com.kitri.myservletboard.data.common;
 
 public class Pagination {
     private int page;

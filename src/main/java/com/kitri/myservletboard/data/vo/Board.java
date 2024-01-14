@@ -1,7 +1,10 @@
-package com.kitri.myservletboard.data;
+package com.kitri.myservletboard.data.vo;
+
+import com.kitri.myservletboard.util.TimeUtil;
 
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.util.ArrayList;
 
 public class Board {
     private Long id;
@@ -12,7 +15,7 @@ public class Board {
     private int viewCount;
     private int commentCount;
     private Long memberId;
-
+    private ArrayList<Comment> comments = new ArrayList<>();
     public Board() {
     }
     public Board(Long id, String title, String content, String writer, LocalDateTime createdAt, int viewCount, int commentCount) {
@@ -83,6 +86,9 @@ public class Board {
         return createdAt;
     }
 
+    public String getPassedTime() {
+        return TimeUtil.getPassedTime(this.getCreatedAt());
+    }
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
@@ -105,5 +111,13 @@ public class Board {
 
     public void setMemberId(Long memberId) {
         this.memberId = memberId;
+    }
+
+    public ArrayList<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(ArrayList<Comment> comments) {
+        this.comments = comments;
     }
 }

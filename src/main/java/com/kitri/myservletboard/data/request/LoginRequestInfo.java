@@ -1,4 +1,4 @@
-package com.kitri.myservletboard.data;
+package com.kitri.myservletboard.data.request;
 
 public class LoginRequestInfo {
     private String loginId;

@@ -1,8 +1,8 @@
 package com.kitri.myservletboard.dao.board;
 
-import com.kitri.myservletboard.data.Board;
-import com.kitri.myservletboard.data.Pagination;
-import com.kitri.myservletboard.data.Search;
+import com.kitri.myservletboard.data.vo.Board;
+import com.kitri.myservletboard.data.common.Pagination;
+import com.kitri.myservletboard.data.common.Search;
 
 import java.util.ArrayList;
 

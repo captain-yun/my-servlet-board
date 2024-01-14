@@ -1,4 +1,4 @@
-<%@ page import="com.kitri.myservletboard.data.Member" %>
+<%@ page import="com.kitri.myservletboard.data.vo.Member" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <header class="d-flex flex-row">
     <a class="logo" href="/board/list">

@@ -1,5 +1,7 @@
-<%@ page import="com.kitri.myservletboard.data.Member" %>
-<%@ page import="com.kitri.myservletboard.data.Board" %>
+<%@ page import="com.kitri.myservletboard.data.vo.Member" %>
+<%@ page import="com.kitri.myservletboard.data.vo.Board" %>
+<%@ page import="com.kitri.myservletboard.data.vo.Comment" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -12,6 +14,7 @@
 <%
     Member loginMember = (Member) session.getAttribute("loginMember");
     Board board = (Board) request.getAttribute("board");
+    ArrayList<Comment> comments = board.getComments();
 %>
 <main class="mt-5 pt-5">
     <div class="container-fluid px-4 ">
@@ -37,7 +40,7 @@
                     <b>저자 :</b> ${board.getWriter()}
                 </div>
                 <div class="p-2 border-bottom">
-                    <b>등록일시 :</b> ${board.getCreatedAt()}
+                    <b>등록일시 :</b> ${board.getPassedTime()}
                 </div>
                 <div class="m-3 h-75">
                     <textarea class="h-100 form-control bg-white" id="content" name="content"
@@ -63,6 +66,57 @@
         </div>
     </div>
 </main>
+<div class="comment">
+    <div class="container-fluid px-4 ">
+        <div class="card mb-4 w-50 mx-auto">
+            <div >
+                <h5 class="mt-3" style="text-align: center;"><b>댓글</b></h5>
+                <hr class="mb-0">
+            </div>
+            <div class="list-group">
+            <%
+                for (int i = 0; i < comments.size(); i++) {
+            %>
+
+                <div class="border border-light list-group-item list-group-item-action" aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h6 class="mb-1"><b><%=comments.get(i).getMember().getName() %></b></h6>
+                        <small><%=comments.get(i).getPassedTime()%></small>
+                    </div>
+                    <p class="mb-1"><%=comments.get(i).getContent()%></p>
+                    <small>답글쓰기</small>
+                </div>
+
+            <%}%>
+            </div>
+
+            <% if (loginMember == null) { %>
+            <div class="list-group">
+                <div class="list-group-item list-group-item-action" aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h6 class="mb-1"><b>댓글을 작성하시려면 <a href='/member/login'>로그인</a> 하세요</b></h6>
+                    </div>
+                </div>
+            </div>
+            <%} else {%>
+            <div class="list-group">
+                <div class="list-group-item list-group-item-action" aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h6 class="mb-2"><b><%= loginMember.getName() %></b></h6>
+                    </div>
+                    <form class="mb-3" action="/comment/create">
+                        <input name="boardId" type="text" value="${board.getId()}" hidden/>
+                        <textarea name="content" class="form-control" rows="3" placeholder="댓글을 남겨보세요"></textarea>
+                        <div class="mt-2 d-flex justify-content-end" role="group">
+                            <button type="submit" class="badge rounded-pill text-bg-light" onclick="this.form.submit()">등록</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <%}%>
+        </div>
+    </div>
+</div>
 </body>
 <style>
     .pd {

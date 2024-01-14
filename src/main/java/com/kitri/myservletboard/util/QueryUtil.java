@@ -1,10 +1,9 @@
 package com.kitri.myservletboard.util;
 
-import com.kitri.myservletboard.data.Pagination;
-import com.kitri.myservletboard.data.Search;
+import com.kitri.myservletboard.data.common.Pagination;
+import com.kitri.myservletboard.data.common.Search;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class QueryUtil {
     public static String buildCountQuery(Search search) {
@@ -24,6 +23,16 @@ public class QueryUtil {
         sql += buildOrderBy(search);
         sql += buildLimit(pagination);
 
+        return sql;
+    }
+
+    public static String buildGetCommentsByBoardId() {
+        //        SELECT comment.*, member.name FROM comment
+        //        JOIN member ON comment.member_id = member.id
+        //        WHERE board_id = 175;
+        String sql = "SELECT comment.*, member.name, member.login_id, member.id m_id FROM comment\n" +
+                "JOIN member ON comment.member_id = member.id\n" +
+                "WHERE board_id = ?";
         return sql;
     }
 

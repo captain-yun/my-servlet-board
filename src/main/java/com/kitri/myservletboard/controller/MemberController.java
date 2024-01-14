@@ -1,6 +1,7 @@
 package com.kitri.myservletboard.controller;
 
-import com.kitri.myservletboard.data.*;
+import com.kitri.myservletboard.data.vo.Member;
+import com.kitri.myservletboard.data.request.LoginRequestInfo;
 import com.kitri.myservletboard.service.MemberService;
 
 import javax.servlet.RequestDispatcher;

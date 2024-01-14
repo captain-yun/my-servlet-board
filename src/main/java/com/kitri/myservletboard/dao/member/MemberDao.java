@@ -1,11 +1,6 @@
 package com.kitri.myservletboard.dao.member;
 
-import com.kitri.myservletboard.data.Board;
-import com.kitri.myservletboard.data.Member;
-import com.kitri.myservletboard.data.Pagination;
-import com.kitri.myservletboard.data.Search;
-
-import java.util.ArrayList;
+import com.kitri.myservletboard.data.vo.Member;
 
 public interface MemberDao {
     public Member getById(Long id);

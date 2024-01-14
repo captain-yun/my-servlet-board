@@ -1,4 +1,4 @@
-<%@ page import="com.kitri.myservletboard.data.Member" %>
+<%@ page import="com.kitri.myservletboard.data.vo.Member" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="ko">
