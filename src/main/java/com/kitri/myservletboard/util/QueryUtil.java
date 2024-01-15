@@ -21,10 +21,27 @@ public class QueryUtil {
 
         sql += buildSelect(search, "*");
         sql += buildPeriod(search.getPeriod());
+        sql += buildOrderBy(search);
         sql += buildLimit(pagination);
 
         buildLimit(pagination);
         return sql;
+    }
+
+    private static String buildOrderBy(Search search) {
+        String query = "";
+        if (search.getOrderBy().equals("latest")) {
+            query = " ORDER BY created_at DESC ";
+        } else if (search.getOrderBy().equals("views")) {
+            query = " ORDER BY view_count DESC ";
+        } else if (search.getOrderBy().equals("accuracy")) {
+            query = " ORDER BY CASE WHEN " + search.getType() + "='" + search.getKeyword() + "' THEN 0 " +
+                    "WHEN " + search.getType() + " LIKE '" + search.getKeyword() + "%' THEN 1 " +
+                    "WHEN " + search.getType() + " LIKE '%" + search.getKeyword() + "%' THEN 2 " +
+                    "WHEN " + search.getType() + " LIKE '%" + search.getKeyword() + "' THEN 3 " +
+                    "ELSE 4 END ";
+        }
+        return query;
     }
 
     private static String buildLimit(Pagination pagination) {
