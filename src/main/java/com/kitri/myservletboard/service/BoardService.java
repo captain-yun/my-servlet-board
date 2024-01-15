@@ -4,6 +4,7 @@ import com.kitri.myservletboard.dao.BoardDao;
 import com.kitri.myservletboard.dao.BoardJdbcDao;
 import com.kitri.myservletboard.data.Board;
 import com.kitri.myservletboard.data.Pagination;
+import com.kitri.myservletboard.data.Search;
 
 import java.util.ArrayList;
 
@@ -29,6 +30,13 @@ public class BoardService {
         pagination.calcPagination();
 
         return boardDao.getAll(pagination);
+    }
+    public ArrayList<Board> getBoards(Pagination pagination, Search search) {
+
+        pagination.setTotalRecords(((BoardJdbcDao)boardDao).count(search)); // totalRecords의 값 계산
+        pagination.calcPagination();
+
+        return boardDao.getAll(pagination, search);
     }
     public void addBoard(Board board) {
         boardDao.save(board);

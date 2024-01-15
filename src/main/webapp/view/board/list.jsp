@@ -1,6 +1,8 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.kitri.myservletboard.data.Board" %>
 <%@ page import="com.kitri.myservletboard.data.Pagination" %>
+<%@ page import="com.kitri.myservletboard.data.Search" %>
+<%@ page import="com.mysql.cj.util.StringUtils" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +10,22 @@
   <jsp:param name="title" value="게시판 목록"/>
 </jsp:include>
 <body>
-  <jsp:include page="/view/common/header.jsp"/>
+  <%
+    Search search = (Search) request.getAttribute("search");
+    String type = "title";
+    String keyword = "";
+    String period = "";
+    if (!search.isEmpty()) {
+      type = search.getType();
+      keyword = search.getKeyword();
+      period = search.getPeriod();
+    }
+  %>
+  <jsp:include page="/view/common/header.jsp">
+    <jsp:param name="type" value="<%=type%>"/>
+    <jsp:param name="keyword" value="<%=keyword%>"/>
+    <jsp:param name="period" value="<%=period%>"/>
+  </jsp:include>
   <div>
     <h2 style="text-align: center; margin-top: 100px;"><b>게시판 목록</b></h2>
   </div>
@@ -53,6 +70,16 @@
 
           <%
             Pagination pagination = (Pagination) request.getAttribute("pagination");
+
+            String searchParam = "";
+//
+            if (!search.isEmpty()) {
+              searchParam
+                      += "&type=" + search.getType()
+                      + "&keyword=" + search.getKeyword()
+                      + "&period=" + search.getPeriod();
+            }
+
             if (pagination.isHasPrev()) {
           %>
             <li class="page-item">
@@ -68,28 +95,23 @@
             for(int i = pagination.getStartPageOnScreen(); i <= pagination.getEndPageOnScreen(); i++) {
               if(pagination.getPage() == i ) {
           %>
-            <li class="page-item"><a class="page-link active" href="/board/list?page=<%=i%>"><%=i%></a></li>
+
+            <li class="page-item"><a class="page-link active" href="/board/list?page=<%=i%><%=searchParam%>"><%=i%></a></li>
           <%} else {%>
-            <li class="page-item"><a class="page-link" href="/board/list?page=<%=i%>"><%=i%></a></li>
+            <li class="page-item"><a class="page-link" href="/board/list?page=<%=i%><%=searchParam%>"><%=i%></a></li>
           <%}}%>
 
           <%
             if (pagination.isHasNext()) {
           %>
             <li class="page-item">
-              <a class="page-link" href="/board/list?page=<%=pagination.getEndPageOnScreen() + 1%>">Next</a>
+              <a class="page-link" href="/board/list?page=<%=pagination.getEndPageOnScreen() + 1%><%=searchParam%>">Next</a>
             </li>
           <%} else {%>
             <li class="page-item disabled">
-              <a class="page-link" href="/board/list?page=<%=pagination.getEndPageOnScreen() + 1%>">Next</a>
+              <a class="page-link" href="/board/list?page=<%=pagination.getEndPageOnScreen() + 1%><%=searchParam%>">Next</a>
             </li>
           <%}%>
-
-
-
-
-
-
         </ul>
       </nav>
     </div>
