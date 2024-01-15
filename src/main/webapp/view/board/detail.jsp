@@ -84,7 +84,16 @@
                         <small><%=comments.get(i).getPassedTime()%></small>
                     </div>
                     <p class="mb-1"><%=comments.get(i).getContent()%></p>
-                    <small>답글쓰기</small>
+
+                    <div class="d-inline d-flex flex-row-reverse">
+                        <% if(comments.get(i).getMember().getId().equals(loginMember.getId())) {%>
+                        <button type="submit" class="badge rounded-pill text-bg-light" onclick="this.form.submit()">삭제</button>
+                        &nbsp
+                        <button type="submit" class="badge rounded-pill text-bg-light" onclick="this.form.submit()">수정</button>
+                        <%}%>
+                        <small class="flex-fill">답글 쓰기</small>
+                    </div>
+
                 </div>
 
             <%}%>
@@ -108,7 +117,7 @@
                         <input name="boardId" type="text" value="${board.getId()}" hidden/>
                         <textarea name="content" class="form-control" rows="3" placeholder="댓글을 남겨보세요"></textarea>
                         <div class="mt-2 d-flex justify-content-end" role="group">
-                            <button type="submit" class="badge rounded-pill text-bg-light" onclick="this.form.submit()">등록</button>
+                            <button type="submit" class="badge rounded-pill text-bg-light" onclick="updateComment(event.type)">등록</button>
                         </div>
                     </form>
                 </div>
@@ -124,4 +133,9 @@
         padding-right: 5px;
     }
 </style>
+<script>
+    function updateComment(e) {
+        alert(e);
+    }
+</script>
 </html>
