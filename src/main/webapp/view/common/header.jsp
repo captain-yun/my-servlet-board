@@ -10,7 +10,7 @@
             <li><a href="/board/list">게시글목록</a></li>
             <li><a href="/view/member/join.jsp">회원가입</a></li>
             <li><a href="/view/member/registration.jsp">회원정보수정</a></li>
-            <li><a href="/view/member/login.jsp">로그인</a></li>
+            <li><a href="/view/member/ex.login.jsp">로그인</a></li>
         </ul>
     </nav>
     <form class="form-inline my-2 my-lg-0 ml-auto pr-5" action="/board/list">
