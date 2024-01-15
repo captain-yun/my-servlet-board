@@ -42,6 +42,11 @@ public class Pagination {
         this.page = page;
     }
 
+    public Pagination(int page, int maxRecordsPerPage) {
+        this.page = page;
+        this.maxRecordsPerPage = maxRecordsPerPage;
+    }
+
     public int getPage() {
         return page;
     }
@@ -97,5 +102,6 @@ public class Pagination {
     public int getEndPageOnScreen() {
         return endPageOnScreen;
     }
+
 }
 

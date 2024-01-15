@@ -4,6 +4,7 @@ public class Search {
     private String type;
     private String keyword;
     private String period;
+    private String orderBy;
 
     public Search() {
     }
@@ -19,6 +20,13 @@ public class Search {
         this.period = period;
     }
 
+    public Search(String type, String keyword, String period, String orderBy) {
+        this.type = type;
+        this.keyword = keyword;
+        this.period = period;
+        this.orderBy = orderBy;
+    }
+
     public String getType() {
         return type;
     }
@@ -29,6 +37,10 @@ public class Search {
 
     public String getPeriod() {
         return period;
+    }
+
+    public String getOrderBy() {
+        return orderBy;
     }
 
     public boolean isEmpty() {

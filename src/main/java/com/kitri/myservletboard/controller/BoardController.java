@@ -41,16 +41,19 @@ public class BoardController extends HttpServlet {
             // /board/list?page=3
             String page = request.getParameter("page");
             if (page == null) page = "1";
-            Pagination pagination = new Pagination(Integer.parseInt(page));
-
             String type = request.getParameter("type");
             if (type == null) type = "true";
             String keyword = request.getParameter("keyword");
             if (keyword == null) keyword = "true";
             String period = request.getParameter("period");
             if (period == null) period = "";
+            String orderBy = request.getParameter("orderBy");
+            if (orderBy == null) orderBy = "latest";
+            String maxRecordsPerPage = request.getParameter("maxRecordsPerPage");
+            if (maxRecordsPerPage == null) maxRecordsPerPage = "10";
 
-            Search search = new Search(type, keyword, period);
+            Pagination pagination = new Pagination(Integer.parseInt(page), Integer.parseInt(maxRecordsPerPage));
+            Search search = new Search(type, keyword, period, orderBy);
 
             ArrayList<Board> boards =
                     boardService.getBoards(pagination, search); // 게시판 리스트
